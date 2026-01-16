@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Summit 2026 - IIT Ropar</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0f172a;
+            --accent: #3b82f6;
+            --accent-light: #60a5fa;
+            --secondary: #1e293b;
+            --text-light: #e2e8f0;
+            --text-muted: #94a3b8;
+            --border: #334155;
+            --success: #10b981;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;
+            background: linear-gradient(135deg, var(--primary) 0%, #1a1f3a 100%);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            z-index: 1000;
+            padding: 1rem 2rem;
+        }
+
+        nav .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        nav a:hover {
+            color: var(--accent-light);
+        }
+
+        /* Hero Section */
+        .hero {
+            margin-top: 60px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            padding: 2rem;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -15%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(16, 185, 129, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: float-reverse 10s ease-in-out infinite;
+        }
+
+        .hero .container {
+            max-width: 900px;
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--text-light) 0%, var(--accent-light) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.1;
+        }
+
+        .hero .tagline {
+            font-size: 1.3rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            font-weight: 300;
+        }
+
+        .hero .location {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            align-items: center;
+            margin-bottom: 3rem;
+            font-size: 1.1rem;
+            color: var(--text-muted);
+        }
+
+        .location-icon {
+            color: var(--accent);
+            font-size: 1.3rem;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.8rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
+            color: white;
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(59, 130, 246, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--accent-light);
+            border: 2px solid var(--accent);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(59, 130, 246, 0.1);
+            transform: translateY(-3px);
+        }
+
+        /* Events Section */
+        .events {
+            max-width: 1200px;
+            margin: 6rem auto;
+            padding: 2rem;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 4rem;
+            color: var(--text-light);
+        }
+
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .event-card {
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1);
+            animation: slideUp 0.6s ease-out backwards;
+        }
+
+        .event-card:nth-child(1) { animation-delay: 0.1s; }
+        .event-card:nth-child(2) { animation-delay: 0.2s; }
+        .event-card:nth-child(3) { animation-delay: 0.3s; }
+
+        .event-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .event-card:hover::before {
+            left: 100%;
+        }
+
+        .event-card:hover {
+            border-color: var(--accent);
+            background: rgba(30, 41, 59, 0.95);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(59, 130, 246, 0.15);
+        }
+
+        .event-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .event-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-light);
+        }
+
+        .event-date {
+            color: var(--accent-light);
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .event-card p {
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .event-details {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .detail-item {
+            display: flex;
+            gap: 0.7rem;
+            align-items: flex-start;
+        }
+
+        .detail-icon {
+            color: var(--accent);
+            flex-shrink: 0;
+            margin-top: 0.2rem;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(15, 23, 42, 0.8);
+            border-top: 1px solid var(--border);
+            padding: 3rem 2rem;
+            margin-top: 6rem;
+            text-align: center;
+            color: var(--text-muted);
+        }
+
+        footer .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+
+        .footer-section h4 {
+            color: var(--text-light);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .footer-section p {
+            font-size: 0.9rem;
+            line-height: 1.8;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            color: var(--accent);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--accent-light);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--border);
+            padding-top: 2rem;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) translateX(0px); }
+            25% { transform: translateY(-20px) translateX(10px); }
+            50% { transform: translateY(-40px) translateX(-10px); }
+            75% { transform: translateY(-20px) translateX(20px); }
+        }
+
+        @keyframes float-reverse {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(30px); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav ul {
+                gap: 1rem;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero .tagline {
+                font-size: 1rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+
+            nav {
+                padding: 1rem;
+            }
+
+            nav .container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <div class="logo">🚀 AI Summit IIT Ropar</div>
+            <ul>
+                <li><a href="#hero">Home</a></li>
+                <li><a href="#events">Events</a></li>
+                <li><a href="#footer">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="container">
+            <h1>AI Summit 2026</h1>
+            <p class="tagline">Explore the Future of Artificial Intelligence</p>
+            <div class="location">
+                <span class="location-icon">📍</span>
+                <span>Indian Institute of Technology, Ropar</span>
+            </div>
+            <div class="cta-buttons">
+                <button class="btn btn-primary">Register Now</button>
+                <button class="btn btn-secondary">Learn More</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Events Section -->
+    <section class="events" id="events">
+        <h2 class="section-title">Featured Events</h2>
+        <div class="events-grid">
+            <!-- Event 1: Mtech Visit -->
+            <div class="event-card">
+                <div class="event-icon">🏢</div>
+                <h3>M.Tech Campus Visit</h3>
+                <div class="event-date">📅 January 19, 2026</div>
+                <p>Explore IIT Ropar's cutting-edge facilities and meet faculty members shaping the future of AI research.</p>
+                <div class="event-details">
+                    <div class="detail-item">
+                        <span class="detail-icon">👥</span>
+                        <span>Meet renowned faculty and researchers</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-icon">🔬</span>
+                        <span>Tour AI labs and research centers</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-icon">🎓</span>
+                        <span>Learn about M.Tech programs</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Event 2: Workshop -->
+            <div class="event-card">
+                <div class="event-icon">💡</div>
+                <h3>AI Workshop</h3>
+                <div class="event-date">📅 February 5, 2026</div>
+                <p>Hands-on workshop covering latest trends in machine learning, deep learning, and practical AI applications.</p>
+                <div class="event-details">
+                    <div class="detail-item">
+                        <span class="detail-icon">🤖</span>
+                        <span>ML & Deep Learning fundamentals</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-icon">💻</span>
+                        <span>Live coding sessions and demos</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-icon">🎯</span>
+                        <span>Industry applications and best practices</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Event 3: Hackathon -->
+            <div class="event-card">
+                <div class="event-icon">⚡</div>
+                <h3>AI Hackathon</h3>
+                <div class="event-date">📅 February 6-7, 2026</div>
+                <p>24-hour coding marathon where teams build innovative AI solutions. Compete for prizes and recognition.</p>
+                <div class="event-details">
+                    <div class="detail-item">
+                        <span class="detail-icon">🏆</span>
+                        <span>Prizes and recognition for top teams</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-icon">👨‍💼</span>
+                        <span>Mentorship from industry experts</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-icon">🚀</span>
+                        <span>Showcase your AI innovations</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>About AI Summit</h4>
+                    <p>The AI Summit at IIT Ropar is a premier event celebrating artificial intelligence innovation and fostering collaboration among students, researchers, and industry professionals.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <p>
+                        <a href="#" style="color: var(--accent); text-decoration: none;">Register for Events</a><br>
+                        <a href="#" style="color: var(--accent); text-decoration: none;">View Schedule</a><br>
+                        <a href="#" style="color: var(--accent); text-decoration: none;">Sponsorship Info</a>
+                    </p>
+                </div>
+                <div class="footer-section">
+                    <h4>Get in Touch</h4>
+                    <p>📧 info@aisummit.iitropar.ac.in<br>
+                    📱 +91-XXX-XXX-XXXX<br>
+                    🌐 www.aisummit.iitropar.ac.in</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 AI Summit at IIT Ropar. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
