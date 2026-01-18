@@ -550,18 +550,75 @@
         .hero-slide.active {
             opacity: 1;
         } 
+                .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .nav-flex {
+        display: flex;
+    align-items: center;
+    justify-content: flex-start; 
+    gap: 2.5rem;  
+        }
+
+    /* Logo container */
+    .logo-container {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    text-decoration: none;
+    }
+
+    .logo-container img {
+    height: 80px;
+    width: auto;
+    }
+
+    /* Nav links */
+    .nav-links {
+    display: flex;
+    list-style: none;
+    gap: 6rem;
+    margin-left: 0;
+    }
+
+    /* CTA button (uses existing theme colors) */
+
+    .nav-btn:hover {
+    background: rgba(59, 130, 246, 0.15);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+    .nav-links {
+        display: none;
+    }
+
+    .nav-btn {
+        font-size: 0.85rem;
+        padding: 0.5rem 1rem;
+    }
+    }
     </style>
 </head>
 <body>
     <!-- Navigation -->
     <nav>
-        <div class="container">
-             <!-- Add code for logo here -->
-            <ul>
-                <li><a href="#hero">Home</a></li>
-                <li><a href="#events">Events</a></li>
-                <li><a href="#footer">Contact</a></li>
-            </ul>
+        <div class="container nav-flex">
+
+    <!-- Logos -->
+        <a href="#hero" class="logo-container">
+        <img src="images/navbar/ai-impact-logo.png" alt="AI Impact Logo">
+        <img src="images/navbar/iitrpr.png" alt="IIT Ropar Logo">
+        </a>
+
+    <!-- Nav Links -->
+        <ul class="nav-links">
+        <li><a href="#hero">Home</a></li>
+        <li><a href="#events">Events</a></li>
+        <li><a href="#footer">Contact</a></li>
+        </ul>
+
         </div>
     </nav>
 
