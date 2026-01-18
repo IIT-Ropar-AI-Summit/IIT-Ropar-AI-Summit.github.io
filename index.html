@@ -256,12 +256,6 @@
             color: var(--text-light);
         }
 
-        .events-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-        }
-
         .event-card {
             background: rgba(30, 41, 59, 0.8);
             border: 1px solid var(--border);
@@ -610,19 +604,19 @@
     .events-header .section-title{
       margin-bottom: 0;   /* override your existing 4rem */
     }
-    
-    .events-carousel{
-      overflow: visible;   /* keeps it clean */
+        
+     .events-carousel{
+      overflow: hidden;
     }
     
     .events-grid{
-      padding: 0 2rem 8px; }
-      display: flex;              /* instead of grid */
+      display: flex;
+      flex-wrap: nowrap;          /* IMPORTANT: prevents 2nd row */
       gap: 2rem;
-      overflow-x: auto;           /* horizontal scroll */
+      overflow-x: auto;           /* allows sliding */
       scroll-snap-type: x mandatory;
       -webkit-overflow-scrolling: touch;
-      padding-bottom: 8px;      
+      padding-bottom: 8px;
     }
     
     .event-card{
@@ -633,7 +627,7 @@
     /* optional: hide scrollbar */
     .events-grid::-webkit-scrollbar{ display:none; }
     .events-grid{ scrollbar-width: none; }
-    
+        
     .carousel-btn{
       width: 42px;
       height: 42px;
@@ -930,7 +924,7 @@
     })();
 
     const eventsGrid = document.getElementById("eventsGrid");
-
+    
     function scrollOneCard(dir){
       const card = eventsGrid.querySelector(".event-card");
       if(!card) return;
@@ -943,7 +937,14 @@
     
     document.getElementById("eventsPrev").onclick = () => scrollOneCard(-1);
     document.getElementById("eventsNext").onclick = () => scrollOneCard(1);
-                
+    
+    let autoSlide = setInterval(() => scrollOneCard(1), 6000);
+    
+    eventsGrid.addEventListener("mouseenter", () => clearInterval(autoSlide));
+    eventsGrid.addEventListener("mouseleave", () => {
+autoSlide = setInterval(() => scrollOneCard(1), 6000);
+});
+
 </script>
 
 </body>
