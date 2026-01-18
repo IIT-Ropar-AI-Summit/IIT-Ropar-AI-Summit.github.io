@@ -494,6 +494,45 @@
             max-width: 1200px;
             margin: 0 auto;
         }
+
+        /* ---------- Hero Image Slider (background) ---------- */
+        .hero-slider {
+            position: absolute;
+            inset: 0;
+            z-index: 0;             /* behind your hero .container (z-index:2) */
+            overflow: hidden;
+            pointer-events: none;   /* clicks go through to buttons */
+        }
+        
+        .hero-slider::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            /* dark overlay so your text remains readable */
+            background: linear-gradient(
+                135deg,
+                rgba(15, 23, 42, 0.75) 0%,
+                rgba(15, 23, 42, 0.35) 55%,
+                rgba(15, 23, 42, 0.75) 100%
+            );
+            z-index: 1;
+        }
+        
+        .hero-slide {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 0.7s ease;
+            z-index: 0;
+        }
+        
+        .hero-slide.active {
+            opacity: 1;
+        }
+
     </style>
 </head>
 <body>
@@ -511,7 +550,11 @@
 
     <!-- Hero Section -->
     <section class="hero" id="hero">
+        <!-- Hero Slider (auto loads /images/slider/1.jpg, 2.jpg, 3.png, ...) -->
+        <div class="hero-slider" id="heroSlider" aria-hidden="true"></div>
+    
         <div class="container">
+
             <h1>AI Summit 2026</h1>
             <p class="tagline">Explore the Future of Artificial Intelligence</p>
             <div class="location">
@@ -718,6 +761,63 @@
     window.onclick = (e) => {
         if (e.target === modal) modal.style.display = "none";
     };
+
+    /* ---------- Hero Slider JS (auto-detect numbered images) ---------- */
+(async function initHeroSlider() {
+    const sliderEl = document.getElementById("heroSlider");
+    if (!sliderEl) return;
+
+    const basePath = "images/slider/";   // <-- your folder
+    const maxImagesToCheck = 200;        // safety cap
+    const intervalMs = 1000;             // 1 second gap
+
+    // Checks if a URL exists (fast, no download)
+    async function urlExists(url) {
+        try {
+            const res = await fetch(url, { method: "HEAD", cache: "no-store" });
+            return res.ok;
+        } catch (e) {
+            return false;
+        }
+    }
+
+    // Build list like: 1.jpg/1.png, 2.jpg/2.png ... until a number is missing
+    const urls = [];
+    for (let i = 1; i <= maxImagesToCheck; i++) {
+        const jpg = basePath + i + ".jpg";
+        const png = basePath + i + ".png";
+
+        const hasJpg = await urlExists(jpg);
+        const hasPng = !hasJpg ? await urlExists(png) : false;
+
+        if (hasJpg) urls.push(jpg);
+        else if (hasPng) urls.push(png);
+        else break; // stop at first missing number (keep numbering continuous)
+    }
+
+    // If nothing found, do nothing (site stays unchanged)
+    if (urls.length === 0) return;
+
+    // Create img elements
+    const imgs = urls.map((src, idx) => {
+        const img = document.createElement("img");
+        img.className = "hero-slide" + (idx === 0 ? " active" : "");
+        img.src = src;
+        img.alt = "";
+        img.loading = "eager";
+        sliderEl.appendChild(img);
+        return img;
+    });
+
+    // Rotate slides
+    let current = 0;
+    setInterval(() => {
+        imgs[current].classList.remove("active");
+        current = (current + 1) % imgs.length;
+        imgs[current].classList.add("active");
+    }, intervalMs);
+})();
+
     </script>
 
 </body>
