@@ -529,7 +529,24 @@
             transition: opacity 2s ease;
             z-index: 0;
         }
+        .details-btn{
+          position: absolute;
+          top: 16px;
+          right: 16px;
+          padding: 6px 12px;
+          border-radius: 8px;
+          border: 1px solid var(--border);
+          background: rgba(15, 23, 42, 0.55);
+          color: var(--text-light);
+          cursor: pointer;
+          font-weight: 600;
+        }
         
+        .details-btn:hover{
+          border-color: var(--accent);
+          background: rgba(59, 130, 246, 0.15);
+        }
+
         .hero-slide.active {
             opacity: 1;
         } 
@@ -653,8 +670,8 @@
                         <span>Showcase your AI innovations</span>
                     </div>
                 </div>
+                <button class="details-btn" data-event="hackathon">Details</button>
             </div>    
-        <button class="details-btn" data-event="hackathon">Details</button>
         </div>
     </section>
 
@@ -751,6 +768,12 @@
             modalBody.innerHTML = eventDetails[title.dataset.event];
             modal.style.display = "block";
         };
+        document.querySelectorAll(".details-btn").forEach(btn => {
+          btn.onclick = () => {
+            modalBody.innerHTML = eventDetails[btn.dataset.event];
+            modal.style.display = "block";
+          };
+        });
     });
 
     closeModal.onclick = () => modal.style.display = "none";
