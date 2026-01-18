@@ -11,6 +11,52 @@
             box-sizing: border-box;
         }
 
+                /* ---------- Modal Popup ---------- */
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(6px);
+            z-index: 2000;
+        }
+
+        .modal-content {
+            background: rgba(30, 41, 59, 0.95);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            width: 90%;
+            max-width: 700px;
+            margin: 8% auto;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .close-btn {
+            position: absolute;
+            right: 18px;
+            top: 12px;
+            font-size: 28px;
+            cursor: pointer;
+            color: var(--text-muted);
+        }
+
+        .close-btn:hover {
+            color: var(--accent-light);
+        }
+
+        .modal h2 {
+            margin-bottom: 1rem;
+            color: var(--accent-light);
+        }
+
+        .modal p,
+        .modal li {
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+
+
         :root {
             --primary: #0f172a;
             --accent: #3b82f6;
@@ -486,7 +532,7 @@
             <!-- Event 1: Mtech Visit -->
             <div class="event-card">
                 <div class="event-icon">🏢</div>
-                <h3>M.Tech Campus Visit</h3>
+                <h3 class="event-title" data-event="mtech">M.Tech Campus Visit</h3>
                 <div class="event-date">📅 January 19, 2026</div>
                 <p>Explore IIT Ropar's cutting-edge facilities and meet faculty members shaping the future of AI research.</p>
                 <div class="event-details">
@@ -505,32 +551,53 @@
                 </div>
             </div>
 
-            <!-- Event 2: Workshop -->
+            <!-- Event 2: School Outreach -->
             <div class="event-card">
-                <div class="event-icon">💡</div>
-                <h3>AI Workshop</h3>
-                <div class="event-date">📅 February 5, 2026</div>
-                <p>Hands-on workshop covering latest trends in machine learning, deep learning, and practical AI applications.</p>
+                <div class="event-icon">🚌</div>
+                <h3 class="event-title" data-event="school">School Outreach Program</h3>
+                <div class="event-date">📅 January 30, 2026</div>
+                <p>Introducing school students to the fundamentals, possibilities, and responsibilities of Artificial Intelligence.</p>
                 <div class="event-details">
                     <div class="detail-item">
-                        <span class="detail-icon">🤖</span>
-                        <span>ML & Deep Learning fundamentals</span>
+                        <span class="detail-icon">👥</span>
+                        <span>Early awareness</span>
                     </div>
                     <div class="detail-item">
-                        <span class="detail-icon">💻</span>
-                        <span>Live coding sessions and demos</span>
+                        <span class="detail-icon">🔬</span>
+                        <span>Ethical understanding</span>
                     </div>
                     <div class="detail-item">
-                        <span class="detail-icon">🎯</span>
-                        <span>Industry applications and best practices</span>
+                        <span class="detail-icon">🎓</span>
+                        <span>Practical Exposure</span>
                     </div>
                 </div>
             </div>
-
-            <!-- Event 3: Hackathon -->
+            <!-- Event 3: Workshop -->
+            <div class="event-card">
+                <div class="event-icon">💡</div>
+                <h3 class="event-title" data-event="workshop">AI Workshop</h3>
+                <div class="event-date">📅 February 5, 2026</div>
+                <p>An introductory workshop focused on AI awareness, real-world policing contexts, and ethical considerations.</p>
+                <div class="event-details">
+                    <div class="detail-item">
+                        <span class="detail-icon">🤖</span>
+                        <span>Helpful in cybercrime</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-icon">💻</span>
+                        <span>Application in policing</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-icon">🎯</span>
+                        <span>Ethical and Legal considerations</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Event 4: Hackathon -->
             <div class="event-card">
                 <div class="event-icon">⚡</div>
-                <h3>AI Hackathon</h3>
+                <h3 class="event-title" data-event="hackathon">AI Hackathon</h3>
                 <div class="event-date">📅 February 6-7, 2026</div>
                 <p>24-hour coding marathon where teams build innovative AI solutions. Compete for prizes and recognition.</p>
                 <div class="event-details">
@@ -577,7 +644,81 @@
             <div class="footer-bottom">
                 <p>&copy; 2026 AI Summit at IIT Ropar. All rights reserved.</p>
             </div>
+            <div style="display:flex; justify-content: space-evenly; padding-top:30px">
+                <img src="https://indiaai.gov.in/indiaAi-2021/build/images/logo-white.png" height="70";width="100"/>
+                <span style="padding-top:13px;"><img src="https://indiaai.gov.in/indiaAi-2021/build/images/footer/meit.svg"\ height="40";width="200"/></span>
+                <img src="https://indiaai.gov.in/indiaAi-2021/build/images/homepage/digital-india.svg" height="70";width="100"/>
+                <img src="https://impact.indiaai.gov.in/home/ai-impact-summit-logo.svg" height="100";width="100"/>
+            </div>
         </div>
     </footer>
+        <!-- Event Modal -->
+    <div class="modal" id="eventModal">
+        <div class="modal-content">
+            <span class="close-btn" id="closeModal">&times;</span>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+        <script>
+    const modal = document.getElementById("eventModal");
+    const modalBody = document.getElementById("modalBody");
+    const closeModal = document.getElementById("closeModal");
+
+    const eventDetails = {
+        mtech: `
+            <h2>M.Tech Campus Visit</h2>
+    
+            <ul>
+                <li>Date: January 19th, 2026</li>
+                <li>Venue: Senate Hall, Admin Block, IIT Ropar</li>
+                <li>Timeslot: All Day event </li>
+                <li>Participatns: M.tech Students</li>
+            </ul>
+        `,
+        school: `
+            <h2>School Outreach Program</h2>
+            <ul>
+                <li>Date: January 30th, 2026</li>
+                <li>Venue: TBD</li>
+                <li>Timeslot: TBD </li>
+                <li>Participatns: School Students</li>
+            </ul>
+        `,
+        workshop: `
+            <h2>AI Workshop</h2>
+            <ul>
+                <li>Date: February 5th, 2026</li>
+                <li>Venue: TBD</li>
+                <li>Timeslot: TBD </li>
+                <li>Participatns: Punjab police personnel </li>
+            </ul>
+        `,
+        hackathon: `
+            <h2>AI Workshop</h2>
+            <ul>
+                <li>Date: February 6-7th, 2026</li>
+                <li>Venue: TBD</li>
+                <li>Timeslot: TBD </li>
+                <li>Participatns: Open for everyone</li>
+            </ul>
+        `
+    };
+
+    document.querySelectorAll(".event-title").forEach(title => {
+        title.style.cursor = "pointer";
+        title.onclick = () => {
+            modalBody.innerHTML = eventDetails[title.dataset.event];
+            modal.style.display = "block";
+        };
+    });
+
+    closeModal.onclick = () => modal.style.display = "none";
+
+    window.onclick = (e) => {
+        if (e.target === modal) modal.style.display = "none";
+    };
+    </script>
+
 </body>
 </html>
