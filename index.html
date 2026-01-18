@@ -243,7 +243,7 @@
 
         /* Events Section */
         .events {
-            max-width: 1200px;
+            max-width: 100%;
             margin: 6rem auto;
             padding: 2rem;
         }
@@ -612,16 +612,17 @@
     }
     
     .events-carousel{
-      overflow: hidden;   /* keeps it clean */
+      overflow: visible;   /* keeps it clean */
     }
     
     .events-grid{
+      padding: 0 2rem 8px; }
       display: flex;              /* instead of grid */
       gap: 2rem;
       overflow-x: auto;           /* horizontal scroll */
       scroll-snap-type: x mandatory;
       -webkit-overflow-scrolling: touch;
-      padding-bottom: 8px;
+      padding-bottom: 8px;      
     }
     
     .event-card{
@@ -707,101 +708,62 @@
     
       <div class="events-carousel">
         <div class="events-grid" id="eventsGrid">
-          <!-- your event-card blocks stay exactly the same here -->
-
-        <h2 class="section-title">Featured Events</h2>
-        <div class="events-grid">
-            <!-- Event 1: Mtech Visit -->
-            <div class="event-card">
-                <h3 class="event-title" data-event="mtech">M.Tech Campus Visit</h3>
-                <div class="event-date">📅 January 19, 2026</div>
-                <p>Explore IIT Ropar's cutting-edge facilities and meet faculty members shaping the future of AI research.</p>
-                <div class="event-details">
-                    <div class="detail-item">
-                        <span class="detail-icon">👥</span>
-                        <span>Meet renowned faculty and researchers</span>
-                    </div>
-                    <div class="detail-item">
-                        <span class="detail-icon">🔬</span>
-                        <span>Tour AI labs and research centers</span>
-                    </div>
-                    <div class="detail-item">
-                        <span class="detail-icon">🎓</span>
-                        <span>Learn about Ph.D. programs</span>
-                    </div>
-                </div>
-                <button class="details-btn" data-event="mtech">Details</button>
+    
+          <!-- Event 1 -->
+          <div class="event-card">
+            <h3 class="event-title" data-event="mtech">M.Tech Campus Visit</h3>
+            <div class="event-date">📅 January 19, 2026</div>
+            <p>Explore IIT Ropar's cutting-edge facilities and meet faculty members shaping the future of AI research.</p>
+            <div class="event-details">
+              <div class="detail-item"><span class="detail-icon">👥</span><span>Meet renowned faculty and researchers</span></div>
+              <div class="detail-item"><span class="detail-icon">🔬</span><span>Tour AI labs and research centers</span></div>
+              <div class="detail-item"><span class="detail-icon">🎓</span><span>Learn about Ph.D. programs</span></div>
             </div>
-
-            <!-- Event 2: School Outreach -->
-            <div class="event-card">
-                <h3 class="event-title" data-event="school">School Outreach Program</h3>
-                <div class="event-date">📅 January 30, 2026</div>
-                <p>Introducing school students to the fundamentals, possibilities, and responsibilities of Artificial Intelligence.</p>
-                <div class="event-details">
-                    <div class="detail-item">
-                        <span class="detail-icon">👥</span>
-                        <span>Early awareness</span>
-                    </div>
-                    <div class="detail-item">
-                        <span class="detail-icon">🔬</span>
-                        <span>Ethical understanding</span>
-                    </div>
-                    <div class="detail-item">
-                        <span class="detail-icon">🎓</span>
-                        <span>Practical Exposure</span>
-                    </div>
-                </div>
-                <button class="details-btn" data-event="school">Details</button>
+            <button class="details-btn" data-event="mtech">Details</button>
+          </div>
+    
+          <!-- Event 2 -->
+          <div class="event-card">
+            <h3 class="event-title" data-event="school">School Outreach Program</h3>
+            <div class="event-date">📅 January 30, 2026</div>
+            <p>Introducing school students to the fundamentals, possibilities, and responsibilities of Artificial Intelligence.</p>
+            <div class="event-details">
+              <div class="detail-item"><span class="detail-icon">👥</span><span>Early awareness</span></div>
+              <div class="detail-item"><span class="detail-icon">🔬</span><span>Ethical understanding</span></div>
+              <div class="detail-item"><span class="detail-icon">🎓</span><span>Practical Exposure</span></div>
             </div>
-            <!-- Event 3: Workshop -->
-            <div class="event-card">
-                <h3 class="event-title" data-event="workshop">Workshop</h3>
-                <div class="event-date">📅 February 5, 2026</div>
-                <p>An introductory workshop on AI for Punjab police and uses in real world policing contexts.</p>
-                <div class="event-details">
-                    <div class="detail-item">
-                        <span class="detail-icon">🤖</span>
-                        <span>Helpful in cybercrime</span>
-                    </div>
-                    <div class="detail-item">
-                        <span class="detail-icon">💻</span>
-                        <span>Application in policing</span>
-                    </div>
-                    <div class="detail-item">
-                        <span class="detail-icon">🎯</span>
-                        <span>Ethical and Legal considerations</span>
-                    </div>
-                </div>
-                <button class="details-btn" data-event="workshop">Details</button>
+            <button class="details-btn" data-event="school">Details</button>
+          </div>
+    
+          <!-- Event 3 -->
+          <div class="event-card">
+            <h3 class="event-title" data-event="workshop">Workshop</h3>
+            <div class="event-date">📅 February 5, 2026</div>
+            <p>An introductory workshop on AI for Punjab police and uses in real world policing contexts.</p>
+            <div class="event-details">
+              <div class="detail-item"><span class="detail-icon">🤖</span><span>Helpful in cybercrime</span></div>
+              <div class="detail-item"><span class="detail-icon">💻</span><span>Application in policing</span></div>
+              <div class="detail-item"><span class="detail-icon">🎯</span><span>Ethical and Legal considerations</span></div>
             </div>
-            
-            <!-- Event 4: Hackathon -->
-            <div class="event-card">
-                <h3 class="event-title" data-event="hackathon">Hackathon</h3>
-                <div class="event-date">📅 February 6-7, 2026</div>
-                <p>24-hour coding marathon where teams build innovative AI solutions. Compete for prizes and recognition.</p>
-                <div class="event-details">
-                    <div class="detail-item">
-                        <span class="detail-icon">🏆</span>
-                        <span>Prizes and recognition for top teams</span>
-                    </div>
-                    <div class="detail-item">
-                        <span class="detail-icon">👨‍💼</span>
-                        <span>Mentorship from industry experts</span>
-                    </div>
-                    <div class="detail-item">
-                        <span class="detail-icon">🚀</span>
-                        <span>Showcase your AI innovations</span>
-                    </div>
-                </div>
-                <button class="details-btn" data-event="hackathon">Details</button>
-            </div>    
-        </div>    
-       </div>
+            <button class="details-btn" data-event="workshop">Details</button>
+          </div>
+    
+          <!-- Event 4 -->
+          <div class="event-card">
+            <h3 class="event-title" data-event="hackathon">Hackathon</h3>
+            <div class="event-date">📅 February 6-7, 2026</div>
+            <p>24-hour coding marathon where teams build innovative AI solutions. Compete for prizes and recognition.</p>
+            <div class="event-details">
+              <div class="detail-item"><span class="detail-icon">🏆</span><span>Prizes and recognition for top teams</span></div>
+              <div class="detail-item"><span class="detail-icon">👨‍💼</span><span>Mentorship from industry experts</span></div>
+              <div class="detail-item"><span class="detail-icon">🚀</span><span>Showcase your AI innovations</span></div>
+            </div>
+            <button class="details-btn" data-event="hackathon">Details</button>
+          </div>
+    
+        </div>
       </div>
     </section>
-
 
     <!-- Footer -->
     <footer id="footer">
@@ -890,19 +852,20 @@
         `
     };
 
-    document.querySelectorAll(".event-title").forEach(title => {
-        title.style.cursor = "pointer";
-        title.onclick = () => {
-            modalBody.innerHTML = eventDetails[title.dataset.event];
-            modal.style.display = "block";
-        };
-        document.querySelectorAll(".details-btn").forEach(btn => {
-          btn.onclick = () => {
-            modalBody.innerHTML = eventDetails[btn.dataset.event];
-            modal.style.display = "block";
-          };
-        });
+     function openEventModal(key){
+      modalBody.innerHTML = eventDetails[key];
+      modal.style.display = "block";
+    }
+    
+    document.querySelectorAll(".event-title").forEach(el => {
+      el.style.cursor = "pointer";
+      el.onclick = () => openEventModal(el.dataset.event);
     });
+    
+    document.querySelectorAll(".details-btn").forEach(btn => {
+      btn.onclick = () => openEventModal(btn.dataset.event);
+    });
+
 
     closeModal.onclick = () => modal.style.display = "none";
 
@@ -965,12 +928,22 @@
         imgs[current].classList.add("active");
     }, intervalMs);
     })();
+
     const eventsGrid = document.getElementById("eventsGrid");
-    document.getElementById("eventsPrev").onclick = () =>
-      eventsGrid.scrollBy({ left: -eventsGrid.clientWidth, behavior: "smooth" });
+
+    function scrollOneCard(dir){
+      const card = eventsGrid.querySelector(".event-card");
+      if(!card) return;
     
-    document.getElementById("eventsNext").onclick = () =>
-      eventsGrid.scrollBy({ left:  eventsGrid.clientWidth, behavior: "smooth" });
+      const gap = parseFloat(getComputedStyle(eventsGrid).gap) || 0;
+      const step = card.getBoundingClientRect().width + gap;
+    
+      eventsGrid.scrollBy({ left: dir * step, behavior: "smooth" });
+    }
+    
+    document.getElementById("eventsPrev").onclick = () => scrollOneCard(-1);
+    document.getElementById("eventsNext").onclick = () => scrollOneCard(1);
+                
 </script>
 
 </body>
