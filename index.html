@@ -590,15 +590,66 @@
 
     /* Responsive */
     @media (max-width: 768px) {
-    .nav-links {
-        display: none;
+        .nav-links {
+            display: none;
+        }
+    
+        .nav-btn {
+            font-size: 0.85rem;
+            padding: 0.5rem 1rem;
+        }
+    }
+    .events-header{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap: 16px;
+      margin-bottom: 2rem; /* replaces the big title spacing */
+    }
+    
+    .events-header .section-title{
+      margin-bottom: 0;   /* override your existing 4rem */
+    }
+    
+    .events-carousel{
+      overflow: hidden;   /* keeps it clean */
+    }
+    
+    .events-grid{
+      display: flex;              /* instead of grid */
+      gap: 2rem;
+      overflow-x: auto;           /* horizontal scroll */
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 8px;
+    }
+    
+    .event-card{
+      flex: 0 0 350px;            /* one card width */
+      scroll-snap-align: start;
+    }
+    
+    /* optional: hide scrollbar */
+    .events-grid::-webkit-scrollbar{ display:none; }
+    .events-grid{ scrollbar-width: none; }
+    
+    .carousel-btn{
+      width: 42px;
+      height: 42px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(15, 23, 42, 0.55);
+      color: var(--text-light);
+      cursor: pointer;
+      font-size: 26px;
+      line-height: 0;
+    }
+    
+    .carousel-btn:hover{
+      border-color: var(--accent);
+      background: rgba(59, 130, 246, 0.15);
     }
 
-    .nav-btn {
-        font-size: 0.85rem;
-        padding: 0.5rem 1rem;
-    }
-    }
     </style>
 </head>
 <body>
@@ -609,7 +660,7 @@
     <!-- Logos -->
         <a href="#hero" class="logo-container">
         <img src="images/navbar/iitrpr.png" alt="IIT Ropar Logo">
-        <img src="images/navbar/ai-impact-logo.png" alt="AI Impact Logo">
+        <img src="images/navbar/ai-impact-logo.png" alt="AI Summit Logo">
         </a>
 
     <!-- Nav Links -->
@@ -630,7 +681,7 @@
       <div class="container">
         <a href="#hero" class="logo-container">
             <img src="images/navbar/iitrpr.png" alt="IIT Ropar Logo">
-            <img src="images/navbar/ai-impact-logo.png" alt="AI Impact Logo">
+            <img src="images/navbar/ai-impact-logo.png" alt="AI Summit Logo">
         </a>
         <h1>Pre-AI Summit 2026</h1>
         <h2>School of AI and Data Engineering, </h2>
@@ -645,6 +696,17 @@
 
     <!-- Events Section -->
     <section class="events" id="events">
+    
+      <div class="events-header">
+        <button class="carousel-btn" id="eventsPrev" aria-label="Previous">&#8249;</button>
+        <h2 class="section-title">Featured Events</h2>
+        <button class="carousel-btn" id="eventsNext" aria-label="Next">&#8250;</button>
+      </div>
+    
+      <div class="events-carousel">
+        <div class="events-grid" id="eventsGrid">
+          <!-- your event-card blocks stay exactly the same here -->
+
         <h2 class="section-title">Featured Events</h2>
         <div class="events-grid">
             <!-- Event 1: Mtech Visit -->
@@ -733,8 +795,11 @@
                 </div>
                 <button class="details-btn" data-event="hackathon">Details</button>
             </div>    
-        </div>
+        </div>    
+       </div>
+      </div>
     </section>
+
 
     <!-- Footer -->
     <footer id="footer">
@@ -897,9 +962,14 @@
         current = (current + 1) % imgs.length;
         imgs[current].classList.add("active");
     }, intervalMs);
-})();
-
-    </script>
+    })();
+    const eventsGrid = document.getElementById("eventsGrid");
+    document.getElementById("eventsPrev").onclick = () =>
+      eventsGrid.scrollBy({ left: -eventsGrid.clientWidth, behavior: "smooth" });
+    
+    document.getElementById("eventsNext").onclick = () =>
+      eventsGrid.scrollBy({ left:  eventsGrid.clientWidth, behavior: "smooth" });
+</script>
 
 </body>
 </html>
