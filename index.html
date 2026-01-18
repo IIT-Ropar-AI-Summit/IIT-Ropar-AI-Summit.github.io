@@ -932,11 +932,25 @@
       const gap = parseFloat(getComputedStyle(eventsGrid).gap) || 0;
       const step = card.getBoundingClientRect().width + gap;
     
+      const maxScroll = eventsGrid.scrollWidth - eventsGrid.clientWidth;
+      const next = eventsGrid.scrollLeft + dir * step;
+    
+      // loop
+      if (dir > 0 && next >= maxScroll - 2) {
+        eventsGrid.scrollTo({ left: 0, behavior: "smooth" });      // last -> first
+        return;
+      }
+      if (dir < 0 && next <= 2) {
+        eventsGrid.scrollTo({ left: maxScroll, behavior: "smooth" }); // first -> last
+        return;
+      }
+    
       eventsGrid.scrollBy({ left: dir * step, behavior: "smooth" });
     }
     
     document.getElementById("eventsPrev").onclick = () => scrollOneCard(-1);
     document.getElementById("eventsNext").onclick = () => scrollOneCard(1);
+
     
     let autoSlide = setInterval(() => scrollOneCard(1), 6000);
     
