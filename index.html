@@ -533,6 +533,21 @@
         .hero-slide.active {
             opacity: 1;
         }
+        /* Left logo container */
+        .brand{
+          display: flex;
+          align-items: center;
+          gap: 14px;
+        }
+        
+        /* Make both logos same size as tabs area */
+        .nav-logo{
+          height: 32px;        /* adjust to match your tabs */
+          width: auto;
+          object-fit: contain;
+          background: transparent;
+          display: block;
+        }
 
     </style>
 </head>
@@ -540,12 +555,10 @@
     <!-- Navigation -->
     <nav>
         <div class="container">
-            <div class="logo">
-              <img class="nav-logo" src="https://impact.indiaai.gov.in/home/ai-impact-summit-logo.svg" alt="AI Impact Summit">
-              <img class="nav-logo" src="https://www.uxdt.nic.in/wp-content/uploads/2024/06/iit-ropar-01.jpg" alt="IIT Ropar">
-              <span class="logo-text">AI Summit IIT Ropar</span>
-            </div>
-
+            <div class="brand">
+          <img class="nav-logo" src="https://impact.indiaai.gov.in/home/ai-impact-summit-logo.svg" alt="AI Impact Summit">
+          <img class="nav-logo" src="https://www.iitrpr.ac.in/sites/default/files/logo.png" alt="IIT Ropar">
+        </div>
             <ul>
                 <li><a href="#hero">Home</a></li>
                 <li><a href="#events">Events</a></li>
