@@ -645,9 +645,17 @@
       background: rgba(59, 130, 246, 0.15);
     }
 /* ---------- Gallery ---------- */
+/*
 .gallery{
   max-width: 100%;
   margin: 4rem auto 0;
+  padding: 2rem;
+}
+*/
+
+.gallery{
+  max-width: 1200px;   /* THIS IS THE FIX */
+  margin: 4rem auto;
   padding: 2rem;
 }
 
@@ -704,6 +712,19 @@
   border-radius: 12px;
   border: 1px solid var(--border);
 }
+
+.gallery-caption{
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 8px 10px;
+  font-size: 0.8rem;
+  background: linear-gradient(to top, rgba(15,23,42,0.85), transparent);
+  color: var(--text-light);
+  pointer-events: none; /* IMPORTANT: allows click to open image */
+}
+
 
     </style>
 </head>
@@ -1080,13 +1101,32 @@ autoSlide = setInterval(() => scrollOneCard(1), 6000);
   }
 
   // Render thumbnails
+/*
   urls.forEach((src) => {
     const item = document.createElement("div");
     item.className = "gallery-item";
     item.innerHTML = `<img src="${src}" loading="lazy" alt="Gallery photo">`;
+
     item.addEventListener("click", () => openGallery(src));
     grid.appendChild(item);
-  });
+  }); 
+  */
+
+
+        // Render thumbnails
+    urls.forEach((src) => {
+      const item = document.createElement("div");
+      item.className = "gallery-item";
+    
+      item.innerHTML = `
+        <img src="${src}" loading="lazy" alt="Pre-AI Summit photo">
+        <div class="gallery-caption">Pre-AI Summit @ IIT Ropar</div>
+      `;
+    
+      item.addEventListener("click", () => openGallery(src));
+      grid.appendChild(item);
+    });
+
 
   // Lightbox
   const gModal = document.getElementById("galleryModal");
