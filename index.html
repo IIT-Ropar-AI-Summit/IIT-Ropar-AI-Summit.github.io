@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pre-AI Summit at IIT Ropar</title>
+    <style>
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            /* Smooth state transitions for all interactive elements */
+            transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        :root {
+            --primary: #0f172a;
+            --accent: #3b82f6;
+            --accent-light: #60a5fa;
+            --secondary: #1e293b;
+            --text-light: #e2e8f0;
+            --text-muted: #94a3b8;
+            --border: #334155;
+            --success: #10b981;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;
+            background: linear-gradient(135deg, var(--primary) 0%, #1a1f3a 100%);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem; /* Added horizontal padding for smaller screens */
+        }
+
+        /* =========================================
+           2. ANIMATION ENGINE (NEW)
+           ========================================= */
+        
+        /* The base state for scroll animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: opacity, transform;
+        }
+
+        /* The active state when scrolled into view */
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Stagger delays for grid items */
+        .stagger-1 { transition-delay: 100ms; }
+        .stagger-2 { transition-delay: 200ms; }
+        .stagger-3 { transition-delay: 300ms; }
+        .stagger-4 { transition-delay: 400ms; }
+
+        /* Micro-interactions */
+        .btn:active, .carousel-btn:active, .details-btn:active {
+            transform: scale(0.96);
+        }
+
+        /* Accessibility Focus */
+        a:focus-visible, button:focus-visible {
+            outline: 2px solid var(--accent-light);
+            outline-offset: 4px;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .reveal { transition: none; opacity: 1; transform: none; }
+        }
+
+        /* =========================================
+           3. NAVIGATION
+           ========================================= */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            z-index: 1000;
+            padding: 1rem 0; /* Adjusted to use container padding */
+        }
+
+        .nav-flex {
+            display: flex;
+            align-items: center;
+            justify-content: space-between; /* Changed to space-between for better mobile spacing */
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            text-decoration: none;
+        }
+
+        .logo-container img {
+            height: 60px; /* Slightly smaller for better mobile fit */
+            width: auto;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-light);
+        }
+
+        /* =========================================
+           4. HERO SECTION
+           ========================================= */
+        .hero {
+            margin-top: 60px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            padding: 2rem;
+        }
+
+        /* Hero Background Animations */
+        .hero::before, .hero::after {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .hero::before {
+            top: -50%;
+            right: -20%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, transparent 70%);
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .hero::after {
+            bottom: -30%;
+            left: -15%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(16, 185, 129, 0.1) 0%, transparent 70%);
+            animation: float-reverse 10s ease-in-out infinite;
+        }
+
+        .hero-slider {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+        
+        .hero-slider::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.85) 0%, rgba(15, 23, 42, 0.45) 50%, rgba(15, 23, 42, 0.85) 100%);
+            z-index: 1;
+        }
+        
+        .hero-slide {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 2s ease;
+            z-index: 0;
+        }
+
+        .hero-slide.active { opacity: 1; }
+
+        .hero .container {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--text-light) 0%, var(--accent-light) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.1;
+        }
+
+        .hero h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-muted);
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            padding: 0.8rem 2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
+            color: white;
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(59, 130, 246, 0.4);
+        }
+
+        /* =========================================
+           5. EVENTS SECTION
+           ========================================= */
+        .events {
+            padding: 6rem 0;
+            overflow: hidden; /* For carousel clipping */
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--text-light);
+        }
+
+        .events-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 2rem;
+        }
+        
+        .events-grid {
+            display: flex;
+            gap: 2rem;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+            padding: 1rem 2rem 2rem 2rem; /* Bottom padding for shadow */
+        }
+        
+        .events-grid::-webkit-scrollbar { display: none; }
+        
+        .event-card {
+            flex: 0 0 350px;
+            scroll-snap-align: center;
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+
+        .event-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(59, 130, 246, 0.15);
+            background: rgba(30, 41, 59, 0.95);
+        }
+
+        .event-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-light);
+            cursor: pointer;
+        }
+
+        .event-date {
+            color: var(--accent-light);
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .event-card p {
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .event-details {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .detail-item {
+            display: flex;
+            gap: 0.7rem;
+            align-items: flex-start;
+        }
+
+        .detail-icon { color: var(--accent); }
+
+        .details-btn {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            padding: 6px 12px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: rgba(15, 23, 42, 0.55);
+            color: var(--text-light);
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .details-btn:hover {
+            border-color: var(--accent);
+            background: rgba(59, 130, 246, 0.15);
+        }
+
+        .carousel-btn {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            background: rgba(30, 41, 59, 0.8);
+            color: var(--text-light);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .carousel-btn:hover {
+            border-color: var(--accent);
+            background: var(--accent);
+            color: white;
+        }
+
+        /* =========================================
+           6. JUDGES SECTION (NEW)
+           ========================================= */
+        .judges {
+            padding: 6rem 0;
+            position: relative;
+            background: linear-gradient(to bottom, transparent, rgba(15, 23, 42, 0.5));
+        }
+
+        .judges-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .judge-card {
+            background: rgba(30, 41, 59, 0.4);
+            border: 1px solid var(--border);
+            border-radius: 24px; /* Highly rounded as per reference */
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            height: 100%;
+            transition: transform 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .judge-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent);
+            box-shadow: 0 20px 40px -10px rgba(59, 130, 246, 0.25);
+            background: rgba(30, 41, 59, 0.9);
+        }
+
+        /* Top Text Area */
+        .judge-content {
+            padding: 2rem 1.5rem 0.5rem 1.5rem;
+            z-index: 2;
+            position: relative;
+        }
+
+        .judge-name {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-light);
+            margin-bottom: 0.25rem;
+        }
+
+        .judge-role {
+            font-size: 0.9rem;
+            color: var(--accent-light);
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            line-height: 1.4;
+        }
+
+        .judge-company {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* Bottom Image Area */
+        .judge-img-container {
+            margin-top: auto;
+            position: relative;
+            height: 220px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        /* The Curved Backdrop Shape */
+        .judge-backdrop-shape {
+            position: absolute;
+            bottom: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 140%;
+            height: 180px;
+            background: linear-gradient(180deg, var(--accent) 0%, var(--secondary) 100%);
+            border-radius: 50% 50% 0 0; /* The Semi-Circle Arch */
+            opacity: 0.2;
+            transition: opacity 0.4s ease, transform 0.4s ease;
+            z-index: 1;
+        }
+
+        .judge-card:hover .judge-backdrop-shape {
+            opacity: 0.4;
+            transform: translateX(-50%) scale(1.05);
+        }
+
+        .judge-img {
+            position: relative;
+            z-index: 2;
+            height: 200px; /* Fixed height for consistency */
+            width: auto;
+            object-fit: contain;
+            filter: grayscale(30%);
+            transition: filter 0.4s ease, transform 0.4s ease;
+            margin-bottom: -5px; /* Tuck slightly to hide bottom edge */
+        }
+
+        .judge-card:hover .judge-img {
+            filter: grayscale(0%);
+            transform: scale(1.03);
+        }
+
+        /* =========================================
+           7. GALLERY SECTION
+           ========================================= */
+        .gallery {
+            padding: 6rem 0;
+        }
+
+        .gallery-subtitle {
+            text-align: center;
+            color: var(--text-muted);
+            margin-top: -2.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1rem;
+        }
+
+        .gallery-item {
+            position: relative;
+            border-radius: 14px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            background: rgba(30, 41, 59, 0.7);
+            cursor: pointer;
+            aspect-ratio: 1; /* Square aspect ratio */
+        }
+
+        .gallery-item:hover {
+            border-color: var(--accent);
+            box-shadow: 0 16px 30px rgba(59, 130, 246, 0.18);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        /* =========================================
+           8. MODALS & FOOTER
+           ========================================= */
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(8px);
+            z-index: 2000;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .modal-content {
+            background: var(--secondary);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            width: 90%;
+            max-width: 700px;
+            margin: 8% auto;
+            padding: 2.5rem;
+            position: relative;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            animation: slideUp 0.3s ease-out;
+        }
+
+        .close-btn {
+            position: absolute;
+            right: 20px;
+            top: 16px;
+            font-size: 32px;
+            cursor: pointer;
+            color: var(--text-muted);
+            line-height: 1;
+            transition: color 0.3s;
+        }
+
+        .close-btn:hover { color: var(--accent-light); }
+
+        .modal h2 { color: var(--accent-light); margin-bottom: 1.5rem; }
+        .modal li { color: var(--text-muted); margin-bottom: 0.5rem; list-style-position: inside; }
+
+        footer {
+            background: rgba(15, 23, 42, 0.95);
+            border-top: 1px solid var(--border);
+            padding: 4rem 0 2rem;
+            color: var(--text-muted);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-section h4 {
+            color: var(--text-light);
+            margin-bottom: 1.2rem;
+            font-size: 1.1rem;
+        }
+
+        .footer-section p { font-size: 0.9rem; line-height: 1.8; }
+        .footer-section a { color: var(--accent); text-decoration: none; transition: 0.3s; }
+        .footer-section a:hover { color: var(--accent-light); }
+
+        .footer-bottom {
+            border-top: 1px solid var(--border);
+            padding-top: 2rem;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        .footer-logos {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+            align-items: center;
+        }
+
+        /* Animations Keyframes */
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(20px, -20px); }
+        }
+        @keyframes float-reverse {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(-20px, 20px); }
+        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+        /* Responsive Tweaks */
+        @media (max-width: 1024px) {
+            .judges-grid { grid-template-columns: repeat(2, 1fr); }
+            .hero h1 { font-size: 2.8rem; }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links { display: none; } /* Could add hamburger menu here */
+            .judges-grid { gap: 1rem; }
+            .hero h1 { font-size: 2.2rem; }
+            .events-grid { scroll-snap-align: start; }
+            .event-card { flex: 0 0 85%; }
+        }
+
+        @media (max-width: 600px) {
+            .judges-grid { grid-template-columns: 1fr; }
+            .judge-card { max-width: 350px; margin: 0 auto; }
+            .cta-buttons { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="container nav-flex">
+            <a href="#hero" class="logo-container">
+                <img src="images/navbar/iitrpr.png" alt="IIT Ropar">
+                <img src="images/navbar/ai-impact-logo.png" alt="AI Summit">
+            </a>
+            <ul class="nav-links">
+                <li><a href="#hero">Home</a></li>
+                <li><a href="#events">Events</a></li>
+                <li><a href="#judges">Visionaries</a></li>
+                <li><a href="#gallery">Gallery</a></li>
+                <li><a href="#footer">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="hero" id="hero">
+        <div class="hero-slider" id="heroSlider" aria-hidden="true"></div>
+        <div class="container reveal">
+            <div style="text-align:center; margin-bottom: 2rem;">
+                <div style="display:inline-flex; gap: 20px;">
+                    <img src="images/navbar/iitrpr.png" alt="IIT Ropar Logo" style="height:80px;">
+                    <img src="images/navbar/ai-impact-logo.png" alt="AI Summit Logo" style="height:80px;">
+                </div>
+            </div>
+            <h1>Pre-AI Summit 2026</h1>
+            <h2>School of AI and Data Engineering<br>Indian Institute of Technology, Ropar</h2>
+            <div class="cta-buttons">
+                <a class="btn btn-primary" href="#events">Explore Events</a>
+            </div>
+        </div>
+    </section>
+
+   <!-- Events Section -->
+    <section class="events" id="events">
+    
+      <div class="events-header">
+        <button class="carousel-btn" id="eventsPrev" aria-label="Previous">&#8249;</button>
+        <h2 class="section-title">Events</h2>
+        <button class="carousel-btn" id="eventsNext" aria-label="Next">&#8250;</button>
+      </div>
+    
+      <div class="events-carousel">
+        <div class="events-grid" id="eventsGrid">
+    
+          <!-- Event 1 -->
+          <div class="event-card">
+            <h3 class="event-title" data-event="mtech">AI Awareness Programme for the Next Generation of Engineers</h3>
+            <div class="event-date">📅 January 19, 2026</div>
+            <p>Explore IIT Ropar's cutting-edge facilities and meet faculty members shaping the future of AI research.</p>
+            <div class="event-details">
+              <div class="detail-item"><span class="detail-icon">👥</span><span>Meet renowned faculty and researchers</span></div>
+              <div class="detail-item"><span class="detail-icon">🔬</span><span>Tour AI labs and research centers</span></div>
+              <div class="detail-item"><span class="detail-icon">🎓</span><span>Learn about Ph.D. programs</span></div>
+            </div>
+            <button class="details-btn" data-event="mtech">Details</button>
+          </div>
+    
+          <!-- Event 2 -->
+          <div class="event-card">
+            <h3 class="event-title" data-event="school">School Outreach Activity Programme</h3>
+            <div class="event-date">📅 January 30, 2026</div>
+            <p>Introducing school students to the fundamentals, possibilities, and responsibilities of Artificial Intelligence.</p>
+            <div class="event-details">
+              <div class="detail-item"><span class="detail-icon">👥</span><span>Early awareness</span></div>
+              <div class="detail-item"><span class="detail-icon">🔬</span><span>Ethical understanding</span></div>
+              <div class="detail-item"><span class="detail-icon">🎓</span><span>Practical Exposure</span></div>
+            </div>
+            <button class="details-btn" data-event="school">Details</button>
+          </div>
+    
+          <!-- Event 3 -->
+          <div class="event-card">
+            <h3 class="event-title" data-event="workshop">Workshop for Internal Security and Public Safety</h3>
+            <div class="event-date">📅 February 5, 2026</div>
+            <p>An introductory workshop on AI for Punjab police and uses in real world policing contexts.</p>
+            <div class="event-details">
+              <div class="detail-item"><span class="detail-icon">🤖</span><span>Helpful in cybercrime</span></div>
+              <div class="detail-item"><span class="detail-icon">💻</span><span>Application in policing</span></div>
+              <div class="detail-item"><span class="detail-icon">🎯</span><span>Ethical and Legal considerations</span></div>
+            </div>
+            <button class="details-btn" data-event="workshop">Details</button>
+          </div>
+    
+          <!-- Event 4 -->
+          <div class="event-card">
+            <h3 class="event-title" data-event="hackathon">Hackathon on AI for Social Good</h3>
+            <div class="event-date">📅 February 6-7, 2026</div>
+            <p>24-hour coding marathon where teams build innovative AI solutions. Compete for prizes and recognition.</p>
+            <div class="event-details">
+              <div class="detail-item"><span class="detail-icon">🏆</span><span>Prizes and recognition for top teams</span></div>
+              <div class="detail-item"><span class="detail-icon">👨‍💼</span><span>Mentorship from industry experts</span></div>
+              <div class="detail-item"><span class="detail-icon">🚀</span><span>Showcase your AI innovations</span></div>
+            </div>
+            <button class="details-btn" data-event="hackathon">Details</button>
+          </div>
+    
+        </div>
+      </div>
+    </section>
+    <!-- Judges Section -->
+    <section class="judges" id="judges">
+        <div class="container">
+            <h2 class="section-title reveal">Visionaries on the Global Stage</h2>
+            <div class="judges-grid">
+                
+                <div class="judge-card reveal stagger-1">
+                    <div class="judge-content">
+                        <div class="judge-name">Nitin Chugh</div>
+                        <div class="judge-role">Senior Software Engineer </div>
+                        <div class="judge-company">Google</div>
+                    </div>
+                    <div class="judge-img-container">
+                        <div class="judge-backdrop-shape"></div>
+                        <img src="https://media.licdn.com/dms/image/v2/D5603AQF-JAi2iOEXIw/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1671605570346?e=1770249600&v=beta&t=GO3GtTl4sTWpri5ONYuhTspJSnRGoYFKhG5MMlM-Snk" alt="Nitin Chugh" class="judge-img">
+                    </div>
+                </div>
+
+                <div class="judge-card reveal stagger-2">
+                    <div class="judge-content">
+                        <div class="judge-name">Achutan Manohar</div>
+                        <div class="judge-role">Principal Engineering Leader</div>
+                        <div class="judge-company">Microsoft</div>
+                    </div>
+                    <div class="judge-img-container">
+                        <div class="judge-backdrop-shape"></div>
+                        <img src="https://media.licdn.com/dms/image/v2/D5603AQE9jl-eqGw_UA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1699892868865?e=1770249600&v=beta&t=avcmIV_GuEufQZhNZA6Afv1LcaVJ7AbC8i0FWcQKqQs" alt="Lars Reger" class="judge-img">
+                    </div>
+                </div>
+
+                <div class="judge-card reveal stagger-3">
+                    <div class="judge-content">
+                        <div class="judge-name">Sarthak Malik </div>
+                        <div class="judge-role">Data Scientist</div>
+                        <div class="judge-company">Master Card</div>
+                    </div>
+                    <div class="judge-img-container">
+                        <div class="judge-backdrop-shape"></div>
+                        <img src="https://media.licdn.com/dms/image/v2/D4D03AQFH2zBxPNxNkA/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1732398656893?e=1770249600&v=beta&t=TnBeM28d4mj-9KHAYlMELBmAoMoZJTxhfaZfN-UbX7Y" alt="Lip-Bu Tan" class="judge-img">
+                    </div>
+                </div>
+
+                <!-- <div class="judge-card reveal stagger-4">
+                    <div class="judge-content">
+                        <div class="judge-name">Maha Al-Bukhari</div>
+                        <div class="judge-role">Chief Executive Officer</div>
+                        <div class="judge-company">InVivo Group</div>
+                    </div>
+                    <div class="judge-img-container">
+                        <div class="judge-backdrop-shape"></div>
+                        <img src="https://ui-avatars.com/api/?name=Maha+Al&background=0D8ABC&color=fff&size=256&font-size=0.33" alt="Maha Al-Bukhari" class="judge-img">
+                    </div>
+                </div> -->
+
+            </div>
+        </div>
+    </section>
+
+    <section class="gallery" id="gallery">
+        <div class="container">
+            <h2 class="section-title reveal">Photo Gallery</h2>
+            <p class="gallery-subtitle reveal stagger-1">Moments from the Pre-AI Summit</p>
+            <div class="gallery-grid" id="galleryGrid" aria-live="polite"></div>
+        </div>
+    </section>
+
+    <footer id="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>About</h4>
+                    <p>Pre-AI Summit, hosted by the <b>School of Artificial Intelligence and Data Engineering (sAIDE), IIT Ropar</b>, is a precursor to the national-level AI Summit to be organized by the Government of India.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <p>
+                        <a href="#events">Register for Events</a><br>
+                        <a href="#judges">View Speakers</a><br>
+                        <a href="#">Sponsorship Info</a>
+                    </p>
+                </div>
+                <div class="footer-section">
+                    <h4>Get in Touch</h4>
+                    <p>📧 staff.saide@iitrpr.ac.in<br>
+                    📞 +91-1881-232202<br>
+                    <a href="http://impact.indiaai.gov.in/" target="_blank">🌐 AI Summit 2026 (Main Event)</a></p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 AI Summit at IIT Ropar. All rights reserved.</p>
+            </div>
+            <div class="footer-logos">
+                <img src="https://indiaai.gov.in/indiaAi-2021/build/images/logo-white.png" height="70";width="100"/>
+                <span style="padding-top:13px;"><img src="https://indiaai.gov.in/indiaAi-2021/build/images/footer/meit.svg"\ height="40";width="200"/></span>
+                <img src="https://indiaai.gov.in/indiaAi-2021/build/images/homepage/digital-india.svg" height="70";width="100"/>
+                <img src="https://impact.indiaai.gov.in/home/ai-impact-summit-logo.svg" height="100";width="100"/>
+            </div>
+        </div>
+    </footer>
+
+    <div class="modal" id="eventModal">
+        <div class="modal-content">
+            <span class="close-btn" id="closeModal">&times;</span>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+    <div class="modal" id="galleryModal" aria-hidden="true">
+        <div class="modal-content" style="text-align:center; background:transparent; border:none; box-shadow:none;">
+            <span class="close-btn" id="closeGallery" style="right:0; top:-30px;">&times;</span>
+            <img id="galleryModalImg" alt="Gallery photo" style="max-width:100%; max-height:80vh; border-radius:8px;">
+        </div>
+    </div>
+
+    <script>
+        // ==========================================
+        // 1. SCROLL ANIMATIONS (IntersectionObserver)
+        // ==========================================
+        document.addEventListener("DOMContentLoaded", () => {
+            const revealOptions = {
+                threshold: 0.1,
+                rootMargin: "0px 0px -50px 0px"
+            };
+
+            const revealOnScroll = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, revealOptions);
+
+            document.querySelectorAll('.reveal').forEach(el => revealOnScroll.observe(el));
+        });
+
+        // ==========================================
+        // 2. MODAL & EVENT LOGIC
+        // ==========================================
+        const modal = document.getElementById("eventModal");
+        const modalBody = document.getElementById("modalBody");
+        const closeModal = document.getElementById("closeModal");
+
+        const eventDetails = {
+            mtech: `<h2>M.Tech Campus Visit</h2><ul><li>Date: January 19th, 2026</li><li>Venue: Senate Hall, IIT Ropar</li><li>Time: All Day</li></ul>`,
+            school: `<h2>School Outreach</h2><ul><li>Date: January 30th, 2026</li><li>Venue: TBD</li><li>Time: 10:00 AM - 4:00 PM</li></ul>`,
+            workshop: `<h2>AI Workshop</h2><ul><li>Date: February 5th, 2026</li><li>Venue: Main Auditorium</li><li>Target: Punjab Police Personnel</li></ul>`,
+            hackathon: `<h2>AI Hackathon</h2><ul><li>Date: February 6-7th, 2026</li><li>Venue: Computing Center</li><li>Theme: AI for Social Good</li></ul>`
+        };
+
+        function openEventModal(key){
+            if(eventDetails[key]) {
+                modalBody.innerHTML = eventDetails[key];
+                modal.style.display = "block";
+            }
+        }
+
+        document.querySelectorAll("[data-event]").forEach(el => {
+            el.addEventListener("click", () => openEventModal(el.dataset.event));
+        });
+
+        closeModal.onclick = () => modal.style.display = "none";
+        
+        // ==========================================
+        // 3. CAROUSEL LOGIC
+        // ==========================================
+        const eventsGrid = document.getElementById("eventsGrid");
+        
+        function scrollGrid(direction) {
+            const scrollAmount = 370; // Card width + gap
+            eventsGrid.scrollBy({ left: direction * scrollAmount, behavior: "smooth" });
+        }
+
+        document.getElementById("eventsPrev").onclick = () => scrollGrid(-1);
+        document.getElementById("eventsNext").onclick = () => scrollGrid(1);
+
+        // ==========================================
+        // 4. GALLERY LOGIC (Auto-detect images)
+        // ==========================================
+        (async function initGallery() {
+  const grid = document.getElementById("galleryGrid");
+  if (!grid) return;
+
+  const basePath = "images/gallery/";     // folder
+  const maxImagesToCheck = 400;           // safety cap
+
+  // reuse your pattern: HEAD-check existence
+  async function urlExists(url) {
+    try {
+      const res = await fetch(url, { method: "HEAD", cache: "no-store" });
+      return res.ok;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  // Detect 1.jpg/1.png, 2.jpg/2.png ... stop at first missing number
+  const urls = [];
+  for (let i = 1; i <= maxImagesToCheck; i++) {
+    const jpg = basePath + i + ".jpg";
+    const png = basePath + i + ".png";
+    const jpeg = basePath + i + ".jpeg";
+
+    const hasJpg = await urlExists(jpg);
+    const hasPng = !hasJpg ? await urlExists(png) : false;
+    const hasJpeg = (!hasJpg && !hasPng) ? await urlExists(jpeg) : false;
+
+    if (hasJpg) urls.push(jpg);
+    else if (hasPng) urls.push(png);
+    else if (hasJpeg) urls.push(jpeg);
+    else break;
+  }
+
+  if (urls.length === 0) {
+    grid.innerHTML = `<p style="color: var(--text-muted); text-align:center;">Gallery photos will appear here.</p>`;
+    return;
+  }
+
+  // Render thumbnails
+  urls.forEach((src) => {
+    const item = document.createElement("div");
+    item.className = "gallery-item";
+    item.innerHTML = `<img src="${src}" loading="lazy" alt="Gallery photo">`;
+    item.addEventListener("click", () => openGallery(src));
+    grid.appendChild(item);
+  });
+
+  // Lightbox
+  const gModal = document.getElementById("galleryModal");
+  const gImg = document.getElementById("galleryModalImg");
+  const close = document.getElementById("closeGallery");
+
+  function openGallery(src){
+    gImg.src = src;
+    gModal.style.display = "block";
+  }
+
+  close.onclick = () => gModal.style.display = "none";
+  window.addEventListener("click", (e) => {
+    if (e.target === gModal) gModal.style.display = "none";
+  });
+
+  // Optional: ESC to close
+  window.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") gModal.style.display = "none";
+  });
+})();
+
+
+        // ==========================================
+        // 5. HERO SLIDER (Simulated)
+        // ==========================================
+        (async function initHeroSlider() {
+    const sliderEl = document.getElementById("heroSlider");
+    if (!sliderEl) return;
+
+    const basePath = "images/slider/";   // <-- your folder
+    const maxImagesToCheck = 200;        // safety cap
+    const intervalMs = 5000;             // 1 second gap
+
+    // Checks if a URL exists (fast, no download)
+    async function urlExists(url) {
+        try {
+            const res = await fetch(url, { method: "HEAD", cache: "no-store" });
+            return res.ok;
+        } catch (e) {
+            return false;
+        }
+    }
+
+    // Build list like: 1.jpg/1.png, 2.jpg/2.png ... until a number is missing
+    const urls = [];
+    for (let i = 1; i <= maxImagesToCheck; i++) {
+        const jpg = basePath + i + ".jpg";
+        const png = basePath + i + ".png";
+
+        const hasJpg = await urlExists(jpg);
+        const hasPng = !hasJpg ? await urlExists(png) : false;
+
+        if (hasJpg) urls.push(jpg);
+        else if (hasPng) urls.push(png);
+        else break; // stop at first missing number (keep numbering continuous)
+    }
+
+    // If nothing found, do nothing (site stays unchanged)
+    if (urls.length === 0) return;
+
+    // Create img elements
+    const imgs = urls.map((src, idx) => {
+        const img = document.createElement("img");
+        img.className = "hero-slide" + (idx === 0 ? " active" : "");
+        img.src = src;
+        img.alt = "";
+        img.loading = "eager";
+        sliderEl.appendChild(img);
+        return img;
+    });
+
+    // Rotate slides
+    let current = 0;
+    setInterval(() => {
+        imgs[current].classList.remove("active");
+        current = (current + 1) % imgs.length;
+        imgs[current].classList.add("active");
+    }, intervalMs);
+    })();
+
+        // Global Window Close for Modals
+        window.onclick = (e) => {
+            if (e.target.classList.contains("modal")) e.target.style.display = "none";
+        };
+    </script>
+</body>
+</html>
