@@ -1,0 +1,1115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pre-AI Summit at IIT Ropar</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+                /* ---------- Modal Popup ---------- */
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(6px);
+            z-index: 2000;
+        }
+
+        .modal-content {
+            background: rgba(30, 41, 59, 0.95);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            width: 90%;
+            max-width: 700px;
+            margin: 8% auto;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .close-btn {
+            position: absolute;
+            right: 18px;
+            top: 12px;
+            font-size: 28px;
+            cursor: pointer;
+            color: var(--text-muted);
+        }
+
+        .close-btn:hover {
+            color: var(--accent-light);
+        }
+
+        .modal h2 {
+            margin-bottom: 1rem;
+            color: var(--accent-light);
+        }
+
+        .modal p,
+        .modal li {
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+
+
+        :root {
+            --primary: #0f172a;
+            --accent: #3b82f6;
+            --accent-light: #60a5fa;
+            --secondary: #1e293b;
+            --text-light: #e2e8f0;
+            --text-muted: #94a3b8;
+            --border: #334155;
+            --success: #10b981;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;
+            background: linear-gradient(135deg, var(--primary) 0%, #1a1f3a 100%);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            z-index: 1000;
+            padding: 1rem 2rem;
+        }
+
+        nav .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 1s ease;
+            position: relative;
+        }
+
+        nav a:hover {
+            color: var(--accent-light);
+        }
+
+        /* Hero Section */
+        .hero {
+            margin-top: 60px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            padding: 2rem;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -15%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(16, 185, 129, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: float-reverse 10s ease-in-out infinite;
+        }
+
+        .hero .container {
+            max-width: 900px;
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--text-light) 0%, var(--accent-light) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.1;
+        }
+
+        .hero .tagline {
+            font-size: 1.3rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            font-weight: 300;
+        }
+
+        .hero .location {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            align-items: center;
+            margin-bottom: 3rem;
+            font-size: 1.1rem;
+            color: var(--text-muted);
+        }
+
+        .location-icon {
+            color: var(--accent);
+            font-size: 1.3rem;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.8rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 1s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
+            color: white;
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(59, 130, 246, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--accent-light);
+            border: 2px solid var(--accent);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(59, 130, 246, 0.1);
+            transform: translateY(-3px);
+        }
+
+        /* Events Section */
+        .events {
+            max-width: 100%;
+            margin: 6rem auto;
+            padding: 2rem;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 4rem;
+            color: var(--text-light);
+        }
+
+        .event-card {
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1);
+            animation: slideUp 0.6s ease-out backwards;
+        }
+
+        .event-card:nth-child(1) { animation-delay: 0.1s; }
+        .event-card:nth-child(2) { animation-delay: 0.2s; }
+        .event-card:nth-child(3) { animation-delay: 0.3s; }
+
+        .event-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .event-card:hover::before {
+            left: 100%;
+        }
+
+        .event-card:hover {
+            border-color: var(--accent);
+            background: rgba(30, 41, 59, 0.95);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(59, 130, 246, 0.15);
+        }
+
+        .event-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .event-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-light);
+        }
+
+        .event-date {
+            color: var(--accent-light);
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .event-card p {
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .event-details {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .detail-item {
+            display: flex;
+            gap: 0.7rem;
+            align-items: flex-start;
+        }
+
+        .detail-icon {
+            color: var(--accent);
+            flex-shrink: 0;
+            margin-top: 0.2rem;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(15, 23, 42, 0.8);
+            border-top: 1px solid var(--border);
+            padding: 3rem 2rem;
+            margin-top: 6rem;
+            text-align: center;
+            color: var(--text-muted);
+        }
+
+        footer .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+
+        .footer-section h4 {
+            color: var(--text-light);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .footer-section p {
+            font-size: 0.9rem;
+            line-height: 1.8;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            color: var(--accent);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--accent-light);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--border);
+            padding-top: 2rem;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) translateX(0px); }
+            25% { transform: translateY(-20px) translateX(10px); }
+            50% { transform: translateY(-40px) translateX(-10px); }
+            75% { transform: translateY(-20px) translateX(20px); }
+        }
+
+        @keyframes float-reverse {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(30px); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav ul {
+                gap: 1rem;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero .tagline {
+                font-size: 1rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+
+            nav {
+                padding: 1rem;
+            }
+
+            nav .container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* ---------- Hero Image Slider (background) ---------- */
+        .hero-slider {
+            position: absolute;
+            inset: 0;
+            z-index: 0;             /* behind your hero .container (z-index:2) */
+            overflow: hidden;
+            pointer-events: none;   /* clicks go through to buttons */
+        }
+        
+        .hero-slider::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            /* dark overlay so your text remains readable */
+            background: linear-gradient(
+                135deg,
+                rgba(15, 23, 42, 0.75) 0%,
+                rgba(15, 23, 42, 0.35) 55%,
+                rgba(15, 23, 42, 0.75) 100%
+            );
+            z-index: 1;
+        }
+        
+        .hero-slide {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            filter: opacity(0.75);
+            transition: opacity 2s ease;
+            z-index: 0;
+        }
+        .details-btn{
+          position: absolute;
+          top: 16px;
+          right: 16px;
+          padding: 6px 12px;
+          border-radius: 8px;
+          border: 1px solid var(--border);
+          background: rgba(15, 23, 42, 0.55);
+          color: var(--text-light);
+          cursor: pointer;
+          font-weight: 600;
+        }
+        
+        .details-btn:hover{
+          border-color: var(--accent);
+          background: rgba(59, 130, 246, 0.15);
+        }
+
+        .hero-slide.active {
+            opacity: 1;
+        } 
+                .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .nav-flex {
+        display: flex;
+    align-items: center;
+    justify-content: flex-start; 
+    gap: 2.5rem;  
+        }
+
+    /* Logo container */
+    .logo-container {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    text-decoration: none;
+    }
+
+    .logo-container img {
+    height: 80px;
+    width: auto;
+    }
+
+    /* Nav links */
+    .nav-links {
+    display: flex;
+    list-style: none;
+    gap: 6rem;
+    margin-left: 0;
+    }
+
+    /* CTA button (uses existing theme colors) */
+
+    .nav-btn:hover {
+    background: rgba(59, 130, 246, 0.15);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .nav-links {
+            display: none;
+        }
+    
+        .nav-btn {
+            font-size: 0.85rem;
+            padding: 0.5rem 1rem;
+        }
+    }
+    .events-header{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap: 16px;
+      margin-bottom: 2rem; /* replaces the big title spacing */
+    }
+    
+    .events-header .section-title{
+      margin-bottom: 0;   /* override your existing 4rem */
+    }
+        
+     .events-carousel{
+      overflow: hidden;
+    }
+    
+    .events-grid{
+      display: flex;
+      flex-wrap: nowrap;          /* IMPORTANT: prevents 2nd row */
+      gap: 2rem;
+      overflow-x: auto;           /* allows sliding */
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 8px;
+    }
+    
+    .event-card{
+      flex: 0 0 350px;            /* one card width */
+      scroll-snap-align: start;
+    }
+    
+    /* optional: hide scrollbar */
+    .events-grid::-webkit-scrollbar{ display:none; }
+    .events-grid{ scrollbar-width: none; }
+        
+    .carousel-btn{
+      width: 42px;
+      height: 42px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(15, 23, 42, 0.55);
+      color: var(--text-light);
+      cursor: pointer;
+      font-size: 26px;
+      line-height: 0;
+    }
+    
+    .carousel-btn:hover{
+      border-color: var(--accent);
+      background: rgba(59, 130, 246, 0.15);
+    }
+/* ---------- Gallery ---------- */
+.gallery{
+  max-width: 100%;
+  margin: 4rem auto 0;
+  padding: 2rem;
+}
+
+.gallery-subtitle{
+  text-align: center;
+  color: var(--text-muted);
+  margin-top: -2.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.gallery-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.gallery-item{
+  position: relative;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: rgba(30, 41, 59, 0.7);
+  cursor: pointer;
+  transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+}
+
+.gallery-item:hover{
+  transform: translateY(-6px);
+  border-color: var(--accent);
+  box-shadow: 0 16px 30px rgba(59, 130, 246, 0.18);
+}
+
+.gallery-item img{
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  display: block;
+  filter: saturate(1.05);
+  transition: transform 0.6s ease;
+}
+
+.gallery-item:hover img{
+  transform: scale(1.05);
+}
+
+.gallery-modal-content{
+  max-width: 900px;
+  padding: 1rem;
+}
+
+#galleryModalImg{
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+}
+
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="container nav-flex">
+
+    <!-- Logos -->
+        <a href="#hero" class="logo-container">
+        <img src="images/navbar/iitrpr.png" alt="IIT Ropar Logo">
+        <img src="images/navbar/ai-impact-logo.png" alt="AI Summit Logo">
+        </a>
+
+    <!-- Nav Links -->
+        <ul class="nav-links">
+        <li><a href="#hero">Home</a></li>
+        <li><a href="#events">Events</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#footer">Contact</a></li>
+        </ul>
+
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+      <!-- Hero Slider (auto loads /images/slider/1.jpg, 2.jpg, 3.png, ...) -->
+      <div class="hero-slider" id="heroSlider" aria-hidden="true"></div>
+    
+      <div class="container">
+        <div style="text-align:center;">
+          <a href="#hero" class="logo-container" style="display:inline-flex;">
+            <img src="images/navbar/iitrpr.png" alt="IIT Ropar Logo">
+            <img src="images/navbar/ai-impact-logo.png" alt="AI Summit Logo">
+          </a>
+        </div>
+        <h1>Pre-AI Summit 2026</h1>
+        <h2>School of AI and Data Engineering, </h2>
+        <h2>Indian Institute of Technology, Ropar</h2>
+        <br>
+        <div class="cta-buttons">
+          <a class="btn btn-primary" href="#events">Events</a>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- Events Section -->
+    <section class="events" id="events">
+    
+      <div class="events-header">
+        <button class="carousel-btn" id="eventsPrev" aria-label="Previous">&#8249;</button>
+        <h2 class="section-title">Events</h2>
+        <button class="carousel-btn" id="eventsNext" aria-label="Next">&#8250;</button>
+      </div>
+    
+      <div class="events-carousel">
+        <div class="events-grid" id="eventsGrid">
+    
+          <!-- Event 1 -->
+          <div class="event-card">
+            <h3 class="event-title" data-event="mtech">AI Awareness Programme for the Next Generation of Engineers</h3>
+            <div class="event-date">📅 January 19, 2026</div>
+            <p>Explore IIT Ropar's cutting-edge facilities and meet faculty members shaping the future of AI research.</p>
+            <div class="event-details">
+              <div class="detail-item"><span class="detail-icon">👥</span><span>Meet renowned faculty and researchers</span></div>
+              <div class="detail-item"><span class="detail-icon">🔬</span><span>Tour AI labs and research centers</span></div>
+              <div class="detail-item"><span class="detail-icon">🎓</span><span>Learn about Ph.D. programs</span></div>
+            </div>
+            <button class="details-btn" data-event="mtech">Details</button>
+          </div>
+    
+          <!-- Event 2 -->
+          <div class="event-card">
+            <h3 class="event-title" data-event="school">School Outreach Activity Programme</h3>
+            <div class="event-date">📅 January 30, 2026</div>
+            <p>Introducing school students to the fundamentals, possibilities, and responsibilities of Artificial Intelligence.</p>
+            <div class="event-details">
+              <div class="detail-item"><span class="detail-icon">👥</span><span>Early awareness</span></div>
+              <div class="detail-item"><span class="detail-icon">🔬</span><span>Ethical understanding</span></div>
+              <div class="detail-item"><span class="detail-icon">🎓</span><span>Practical Exposure</span></div>
+            </div>
+            <button class="details-btn" data-event="school">Details</button>
+          </div>
+    
+          <!-- Event 3 -->
+          <div class="event-card">
+            <h3 class="event-title" data-event="workshop">Workshop for Internal Security and Public Safety</h3>
+            <div class="event-date">📅 February 5, 2026</div>
+            <p>An introductory workshop on AI for Punjab police and uses in real world policing contexts.</p>
+            <div class="event-details">
+              <div class="detail-item"><span class="detail-icon">🤖</span><span>Helpful in cybercrime</span></div>
+              <div class="detail-item"><span class="detail-icon">💻</span><span>Application in policing</span></div>
+              <div class="detail-item"><span class="detail-icon">🎯</span><span>Ethical and Legal considerations</span></div>
+            </div>
+            <button class="details-btn" data-event="workshop">Details</button>
+          </div>
+    
+          <!-- Event 4 -->
+          <div class="event-card">
+            <h3 class="event-title" data-event="hackathon">Hackathon on AI for Social Good</h3>
+            <div class="event-date">📅 February 6-7, 2026</div>
+            <p>24-hour coding marathon where teams build innovative AI solutions. Compete for prizes and recognition.</p>
+            <div class="event-details">
+              <div class="detail-item"><span class="detail-icon">🏆</span><span>Prizes and recognition for top teams</span></div>
+              <div class="detail-item"><span class="detail-icon">👨‍💼</span><span>Mentorship from industry experts</span></div>
+              <div class="detail-item"><span class="detail-icon">🚀</span><span>Showcase your AI innovations</span></div>
+            </div>
+            <button class="details-btn" data-event="hackathon">Details</button>
+          </div>
+    
+        </div>
+      </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="gallery" id="gallery">
+      <div class="container">
+        <h2 class="section-title">Photo Gallery</h2>
+        <p class="gallery-subtitle">Moments from the Pre-AI Summit</p>
+    
+        <div class="gallery-grid" id="galleryGrid" aria-live="polite"></div>
+      </div>
+    </section>
+    
+    <!-- Gallery Lightbox -->
+    <div class="modal" id="galleryModal" aria-hidden="true">
+      <div class="modal-content gallery-modal-content">
+        <span class="close-btn" id="closeGallery">&times;</span>
+        <img id="galleryModalImg" alt="Gallery photo" />
+      </div>
+    </div>
+
+
+    <!-- Footer -->
+    <footer id="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>About</h4>
+                    <p>Pre-AI Summit, hosted by the <b>School of Artificial Intelligence and Data Engineering (sAIDE), IIT Ropar, </b> is a precursor to the national-level AI Summit to be organized by the Government of India and aims to bring together students, researchers, and practitioners to discuss emerging trends, challenges, and opportunities in artificial intelligence.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <p>
+                        <a href="#" style="color: var(--accent); text-decoration: none;">Register for Events</a><br>
+                        <a href="#" style="color: var(--accent); text-decoration: none;">View Schedule</a><br>
+                        <a href="#" style="color: var(--accent); text-decoration: none;">Sponsorship Info</a>
+                    </p>
+                </div>
+                <div class="footer-section">
+                    <h4>Get in Touch</h4>
+                    <p >📧 staff.saide@iitrpr.ac.in<br>
+                    📞 +91-1881-232202<br>
+                    <a href="http://impact.indiaai.gov.in/" rel="noopener noreferrer" target="_blank" style="color:var(--text-light);text-decoration:none;">🌐 AI Summit 2026 (Main Event)</a></p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 AI Summit at IIT Ropar. All rights reserved.</p>
+            </div>
+            <div style="display:flex; justify-content: space-evenly; padding-top:30px">
+                <img src="https://indiaai.gov.in/indiaAi-2021/build/images/logo-white.png" height="70";width="100"/>
+                <span style="padding-top:13px;"><img src="https://indiaai.gov.in/indiaAi-2021/build/images/footer/meit.svg"\ height="40";width="200"/></span>
+                <img src="https://indiaai.gov.in/indiaAi-2021/build/images/homepage/digital-india.svg" height="70";width="100"/>
+                <img src="https://impact.indiaai.gov.in/home/ai-impact-summit-logo.svg" height="100";width="100"/>
+            </div>
+        </div>
+    </footer>
+        <!-- Event Modal -->
+    <div class="modal" id="eventModal">
+        <div class="modal-content">
+            <span class="close-btn" id="closeModal">&times;</span>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+        <script>
+    const modal = document.getElementById("eventModal");
+    const modalBody = document.getElementById("modalBody");
+    const closeModal = document.getElementById("closeModal");
+
+    const eventDetails = {
+        mtech: `
+            <h2>M.Tech Campus Visit</h2>
+    
+            <ul>
+                <li>Date: January 19th, 2026</li>
+                <li>Venue: Senate Hall, Admin Block, IIT Ropar</li>
+                <li>Timeslot: All Day event </li>
+                <li>Participants: M.Tech Students</li>
+            </ul>
+        `,
+        school: `
+            <h2>School Outreach Program</h2>
+            <ul>
+                <li>Date: January 30th, 2026</li>
+                <li>Venue: TBD</li>
+                <li>Timeslot: TBD </li>
+                <li>Participants: School Students</li>
+            </ul>
+        `,
+        workshop: `
+            <h2>AI Workshop</h2>
+            <ul>
+                <li>Date: February 5th, 2026</li>
+                <li>Venue: TBD</li>
+                <li>Timeslot: TBD </li>
+                <li>Participants: Punjab police personnel </li>
+            </ul>
+        `,
+        hackathon: `
+            <h2>AI Hackathon</h2>
+            <ul>
+                <li>Date: February 6-7th, 2026</li>
+                <li>Venue: TBD</li>
+                <li>Timeslot: TBD </li>
+                <li>Participants: Open for everyone</li>
+            </ul>
+        `
+    };
+
+     function openEventModal(key){
+      modalBody.innerHTML = eventDetails[key];
+      modal.style.display = "block";
+    }
+    
+    document.querySelectorAll(".event-title").forEach(el => {
+      el.style.cursor = "pointer";
+      el.onclick = () => openEventModal(el.dataset.event);
+    });
+    
+    document.querySelectorAll(".details-btn").forEach(btn => {
+      btn.onclick = () => openEventModal(btn.dataset.event);
+    });
+
+
+    closeModal.onclick = () => modal.style.display = "none";
+
+    window.onclick = (e) => {
+        if (e.target === modal) modal.style.display = "none";
+    };
+
+    /* ---------- Hero Slider JS (auto-detect numbered images) ---------- */
+(async function initHeroSlider() {
+    const sliderEl = document.getElementById("heroSlider");
+    if (!sliderEl) return;
+
+    const basePath = "images/slider/";   // <-- your folder
+    const maxImagesToCheck = 200;        // safety cap
+    const intervalMs = 5000;             // 1 second gap
+
+    // Checks if a URL exists (fast, no download)
+    async function urlExists(url) {
+        try {
+            const res = await fetch(url, { method: "HEAD", cache: "no-store" });
+            return res.ok;
+        } catch (e) {
+            return false;
+        }
+    }
+
+    // Build list like: 1.jpg/1.png, 2.jpg/2.png ... until a number is missing
+    const urls = [];
+    for (let i = 1; i <= maxImagesToCheck; i++) {
+        const jpg = basePath + i + ".jpg";
+        const png = basePath + i + ".png";
+
+        const hasJpg = await urlExists(jpg);
+        const hasPng = !hasJpg ? await urlExists(png) : false;
+
+        if (hasJpg) urls.push(jpg);
+        else if (hasPng) urls.push(png);
+        else break; // stop at first missing number (keep numbering continuous)
+    }
+
+    // If nothing found, do nothing (site stays unchanged)
+    if (urls.length === 0) return;
+
+    // Create img elements
+    const imgs = urls.map((src, idx) => {
+        const img = document.createElement("img");
+        img.className = "hero-slide" + (idx === 0 ? " active" : "");
+        img.src = src;
+        img.alt = "";
+        img.loading = "eager";
+        sliderEl.appendChild(img);
+        return img;
+    });
+
+    // Rotate slides
+    let current = 0;
+    setInterval(() => {
+        imgs[current].classList.remove("active");
+        current = (current + 1) % imgs.length;
+        imgs[current].classList.add("active");
+    }, intervalMs);
+    })();
+
+    const eventsGrid = document.getElementById("eventsGrid");
+    
+    function scrollOneCard(dir){
+      const card = eventsGrid.querySelector(".event-card");
+      if(!card) return;
+    
+      const gap = parseFloat(getComputedStyle(eventsGrid).gap) || 0;
+      const step = card.getBoundingClientRect().width + gap;
+    
+      const maxScroll = eventsGrid.scrollWidth - eventsGrid.clientWidth;
+      const next = eventsGrid.scrollLeft + dir * step;
+    
+      // loop
+      if (dir > 0 && next >= maxScroll - 2) {
+        eventsGrid.scrollTo({ left: 0, behavior: "smooth" });      // last -> first
+        return;
+      }
+      if (dir < 0 && next <= 2) {
+        eventsGrid.scrollTo({ left: maxScroll, behavior: "smooth" }); // first -> last
+        return;
+      }
+    
+      eventsGrid.scrollBy({ left: dir * step, behavior: "smooth" });
+    }
+    
+    document.getElementById("eventsPrev").onclick = () => scrollOneCard(-1);
+    document.getElementById("eventsNext").onclick = () => scrollOneCard(1);
+
+    
+    let autoSlide = setInterval(() => scrollOneCard(1), 6000);
+    
+    eventsGrid.addEventListener("mouseenter", () => clearInterval(autoSlide));
+    eventsGrid.addEventListener("mouseleave", () => {
+autoSlide = setInterval(() => scrollOneCard(1), 6000);
+});
+
+            /* ---------- Gallery JS (auto-detect numbered images) ---------- */
+(async function initGallery() {
+  const grid = document.getElementById("galleryGrid");
+  if (!grid) return;
+
+  const basePath = "images/gallery/";     // folder
+  const maxImagesToCheck = 400;           // safety cap
+
+  // reuse your pattern: HEAD-check existence
+  async function urlExists(url) {
+    try {
+      const res = await fetch(url, { method: "HEAD", cache: "no-store" });
+      return res.ok;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  // Detect 1.jpg/1.png, 2.jpg/2.png ... stop at first missing number
+  const urls = [];
+  for (let i = 1; i <= maxImagesToCheck; i++) {
+    const jpg = basePath + i + ".jpg";
+    const png = basePath + i + ".png";
+    const jpeg = basePath + i + ".jpeg";
+
+    const hasJpg = await urlExists(jpg);
+    const hasPng = !hasJpg ? await urlExists(png) : false;
+    const hasJpeg = (!hasJpg && !hasPng) ? await urlExists(jpeg) : false;
+
+    if (hasJpg) urls.push(jpg);
+    else if (hasPng) urls.push(png);
+    else if (hasJpeg) urls.push(jpeg);
+    else break;
+  }
+
+  if (urls.length === 0) {
+    grid.innerHTML = `<p style="color: var(--text-muted); text-align:center;">Gallery photos will appear here.</p>`;
+    return;
+  }
+
+  // Render thumbnails
+  urls.forEach((src) => {
+    const item = document.createElement("div");
+    item.className = "gallery-item";
+    item.innerHTML = `<img src="${src}" loading="lazy" alt="Gallery photo">`;
+    item.addEventListener("click", () => openGallery(src));
+    grid.appendChild(item);
+  });
+
+  // Lightbox
+  const gModal = document.getElementById("galleryModal");
+  const gImg = document.getElementById("galleryModalImg");
+  const close = document.getElementById("closeGallery");
+
+  function openGallery(src){
+    gImg.src = src;
+    gModal.style.display = "block";
+  }
+
+  close.onclick = () => gModal.style.display = "none";
+  window.addEventListener("click", (e) => {
+    if (e.target === gModal) gModal.style.display = "none";
+  });
+
+  // Optional: ESC to close
+  window.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") gModal.style.display = "none";
+  });
+})();
+
+</script>
+
+</body>
+</html>
